@@ -2,23 +2,34 @@
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
+	const int gravidade = 1;
+	const int TempoEntreFrames = 25;
+	bool EstaMorto = false;
 
 	public MainPage()
 	{
 		InitializeComponent();
-	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+		//Desenhar().RunSynchronously();
+	}
+	void AplicaGravidade()
 	{
-		count++;
-
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
+		ImagePassarinho.TranslationY += gravidade;
 	}
+
+	async Task Desenhar()
+	{
+		while (!EstaMorto)
+		{
+			AplicaGravidade();
+			await Task.Delay(TempoEntreFrames);
+		}
+	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+		Desenhar();
+    }
 }
 

@@ -5,19 +5,32 @@
 
     <Grid>
 
-    <Image Source="fundo.png"
-    HorizontalOptions="Fill"
-    VerticalOptions="Fill"/>
+        <Image Source="fundo.png"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill"/>
 
-    <Image Source="passarinho.png"
-    HeightRequest="50"
-    WidthRequest="50"
-    HorizontalOptions="Start"/>
+        <Image x:Name="ImagePassarinho"
+               Source="passarinho.png"
+               HeightRequest="50"
+               WidthRequest="50"
+               HorizontalOptions="Start"/>
 
-    <Image Source="cano.png"
-    HorizontalOptions="Fill"
-    VerticalOptions="Fill"/>
+        <Image Source="canocima.png"
+               HorizontalOptions="End"
+               HeightRequest="350"
+               VerticalOptions="Start"/>
 
+        <Image Source="canobaixo.png"
+               HorizontalOptions="End"
+               HeightRequest="350"
+               VerticalOptions="End"/>
+
+        <Image Source="chaocerto.png"
+               WidthRequest="545"
+               HorizontalOptions="Fill"
+               VerticalOptions="End"/>
+
+       
     </Grid>
 
 </ContentPage>
