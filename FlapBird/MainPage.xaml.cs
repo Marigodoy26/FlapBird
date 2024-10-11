@@ -2,9 +2,13 @@
 
 public partial class MainPage : ContentPage
 {
-	const int gravidade = 1;
-	const int TempoEntreFrames = 25;
-	bool EstaMorto = false;
+	const int gravidade=5;
+	const int TempoEntreFrames=25;
+	bool EstaMorto=true;
+	double LarguraJanela=0;
+	double AlturaJanela=0;
+	int Velocidade=20;
+
 
 	public MainPage()
 	{
@@ -23,13 +27,40 @@ public partial class MainPage : ContentPage
 		{
 			AplicaGravidade();
 			await Task.Delay(TempoEntreFrames);
+			GerenciaCanos();
 		}
 	}
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
+    
+	void OnGameOverClicked(object s, TappedEventArgs a)
+	{
+		FrameGameOver.IsVisible=false;
+		Inicializar();
 		Desenhar();
+	}
+
+	void Inicializar()
+	{
+		EstaMorto=false;
+		ImagePassarinho.TranslationY=0;
+	}
+
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+		LarguraJanela=width;
+		AlturaJanela=height;
     }
+
+	void GerenciaCanos()
+	{
+		CanoCima.TranslationX-=Velocidade;
+		CanoBaixo.TranslationX-=Velocidade;
+		if(CanoBaixo.TranslationX<=-LarguraJanela)
+		{
+		CanoCima.TranslationX=0;
+		CanoBaixo.TranslationX=0;
+		}
+	}
 }
 
