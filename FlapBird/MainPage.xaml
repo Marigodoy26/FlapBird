@@ -5,9 +5,14 @@
 
        <Grid>
 
+              <Grid.GestureRecognizers>
+                     <TapGestureRecognizer Tapped="OnGridClicked"/>
+              </Grid.GestureRecognizers>
+
               <Image Source="fundo.png"
                      HorizontalOptions="Fill"
-                     VerticalOptions="Fill"/>
+                     VerticalOptions="Fill"
+                     Aspect="AspectFill"/>
 
               <Image x:Name="ImagePassarinho"
                      Source="passarinho.png"
@@ -18,19 +23,24 @@
               <Image x:Name="CanoCima"
                      Source="canocima.png"
                      HorizontalOptions="End"
-                     HeightRequest="300"
+                     HeightRequest="250"
                      VerticalOptions="Start"/>
 
               <Image x:Name="CanoBaixo"
                      Source="canobaixo.png"
                      HorizontalOptions="End"
-                     HeightRequest="300"
+                     HeightRequest="250"
+
                      VerticalOptions="End"/>
 
-              <Image Source="chaocerto.png"
+              <Image x:Name="Chao"
+                     Source="chaocerto.png"
                      WidthRequest="545"
+                     HeightRequest="80"
                      HorizontalOptions="Fill"
-                     VerticalOptions="End"/>
+                     VerticalOptions="End"
+                     Aspect="AspectFill"/>
+
 
               <Frame x:Name="FrameGameOver"
                      BackgroundColor="#99000000"
@@ -40,8 +50,9 @@
                             <TapGestureRecognizer Tapped="OnGameOverClicked"/>
                      </Frame.GestureRecognizers>
                      <Image Source="play.png"/>
-                     </Frame>
+              </Frame>
 
        </Grid>
+
 
 </ContentPage>
