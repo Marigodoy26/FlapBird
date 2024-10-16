@@ -75,6 +75,9 @@ public partial class MainPage : ContentPage
 		{
 			CanoCima.TranslationX = 0;
 			CanoBaixo.TranslationX = 0;
+			var alturaMax=-100;
+			var alturaMin=-CanoBaixo.HeightRequest;
+			CanoCima.TranslationY=Random.Shared.Next((int)alturaMin, (int)alturaMax);
 		}
 	}
 
