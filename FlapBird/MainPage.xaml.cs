@@ -13,6 +13,7 @@ public partial class MainPage : ContentPage
 	int TempoPulando = 1;
 	const int maxTempoPulando = 3;
 	const int aberturaMinima = 400;
+	int Score=0;
 
 
 	public MainPage()
@@ -80,6 +81,8 @@ public partial class MainPage : ContentPage
 			var alturaMin = -CanoBaixo.HeightRequest;
 			CanoCima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
 			CanoBaixo.TranslationY = CanoCima.TranslationY + aberturaMinima + CanoBaixo.HeightRequest;
+			Score++;
+			labelScore.Text="Canos:"+Score.ToString("D3");
 		}
 	}
 
