@@ -26,22 +26,20 @@
                      Source="passarinho.png"
                      HeightRequest="50"
                      WidthRequest="50"
-                     HorizontalOptions="Start"/>
+                     HorizontalOptions="Center"/>
 
               <Image x:Name="CanoCima"
                      Source="canocima.png"
-                     HorizontalOptions="End"
-                     HeightRequest="700"
+                     HeightRequest="550"
                      WidthRequest="30"
                      VerticalOptions="Start"
                      BackgroundColor="Red"/>
 
               <Image x:Name="CanoBaixo"
                      Source="canobaixo.png"
-                     HorizontalOptions="End"
-                     HeightRequest="800"
-                     WidthRequest="30"
-                     VerticalOptions="End"/>
+                     HeightRequest="450"
+                     WidthRequest="50"
+                     BackgroundColor="Red"/>
 
               <Image x:Name="Chao"
                      Source="chaocerto.png"

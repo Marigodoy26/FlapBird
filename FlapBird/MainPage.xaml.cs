@@ -13,7 +13,7 @@ public partial class MainPage : ContentPage
 	int TempoPulando = 1;
 	const int maxTempoPulando = 3;
 	const int aberturaMinima = 400;
-	int Score=0;
+	int Score = 0;
 
 
 	public MainPage()
@@ -59,7 +59,12 @@ public partial class MainPage : ContentPage
 	void Inicializar()
 	{
 		EstaMorto = false;
+		Score = 0;
 		ImagePassarinho.TranslationY = 0;
+		ImagePassarinho.TranslationX = 0;
+		CanoCima.TranslationX = -LarguraJanela;
+		CanoBaixo.TranslationX = -LarguraJanela;
+		GerenciaCanos();
 	}
 
 	protected override void OnSizeAllocated(double width, double height)
@@ -82,7 +87,7 @@ public partial class MainPage : ContentPage
 			CanoCima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
 			CanoBaixo.TranslationY = CanoCima.TranslationY + aberturaMinima + CanoBaixo.HeightRequest;
 			Score++;
-			labelScore.Text="Canos:"+Score.ToString("D3");
+			labelScore.Text = "Canos:" + Score.ToString("D3");
 		}
 	}
 
@@ -109,7 +114,9 @@ public partial class MainPage : ContentPage
 		if (!EstaMorto)
 		{
 			if (VerificaColisaoTeto() ||
-			VerificaColisaoChao())
+			VerificaColisaoChao() ||
+			VerificacolisaoCanoCima() ||
+			VerificacolisaoCanoBaixo())
 			{
 				return true;
 			}
@@ -131,6 +138,37 @@ public partial class MainPage : ContentPage
 	void OnGridClicked(object s, TappedEventArgs a)
 	{
 		EstaPulando = true;
+	}
+
+	bool VerificacolisaoCanoCima()
+	{
+		var posHPassarinho = (LarguraJanela / 2) - (ImagePassarinho.WidthRequest / 2);
+		var posVPassarinho = (LarguraJanela / 2) - (ImagePassarinho.HeightRequest / 2) + ImagePassarinho.TranslationY;
+		if (posHPassarinho >= Math.Abs(CanoCima.TranslationX) - CanoCima.WidthRequest &&
+		posHPassarinho <= Math.Abs(CanoCima.TranslationX) + CanoCima.WidthRequest &&
+		posHPassarinho <= CanoCima.HeightRequest + CanoCima.TranslationY)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	bool VerificacolisaoCanoBaixo()
+	{
+		var posHPassarinho = (LarguraJanela / 2) - (ImagePassarinho.WidthRequest / 2);
+		var posVPassarinho = (LarguraJanela / 2) - (ImagePassarinho.HeightRequest / 2) + ImagePassarinho.TranslationY;
+		if (posHPassarinho >= Math.Abs(CanoBaixo.TranslationX) - CanoBaixo.WidthRequest &&
+		posHPassarinho <= Math.Abs(CanoCima.TranslationX) + CanoBaixo.WidthRequest &&
+		posHPassarinho <= CanoBaixo.HeightRequest + CanoBaixo.TranslationY)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 }
