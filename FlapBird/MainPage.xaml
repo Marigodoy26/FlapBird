@@ -31,19 +31,20 @@
               <Image x:Name="CanoCima"
                      Source="canocima.png"
                      HeightRequest="550"
-                     WidthRequest="30"
+                     WidthRequest="80"
                      VerticalOptions="Start"
                      BackgroundColor="Red"/>
 
               <Image x:Name="CanoBaixo"
                      Source="canobaixo.png"
-                     HeightRequest="450"
-                     WidthRequest="50"
+                     HeightRequest="550"
+                     WidthRequest="80"
+                     VerticalOptions="End"
                      BackgroundColor="Red"/>
 
               <Image x:Name="Chao"
                      Source="chaocerto.png"
-                     WidthRequest="545"
+                     WidthRequest="550"
                      HeightRequest="80"
                      HorizontalOptions="Fill"
                      VerticalOptions="End"

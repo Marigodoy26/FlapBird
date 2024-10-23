@@ -87,6 +87,8 @@ public partial class MainPage : ContentPage
 			CanoCima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
 			CanoBaixo.TranslationY = CanoCima.TranslationY + aberturaMinima + CanoBaixo.HeightRequest;
 			Score++;
+			if(Score%2==0)
+			Velocidade++;
 			labelScore.Text = "Canos:" + Score.ToString("D3");
 		}
 	}
@@ -158,10 +160,11 @@ public partial class MainPage : ContentPage
 	bool VerificacolisaoCanoBaixo()
 	{
 		var posHPassarinho = (LarguraJanela / 2) - (ImagePassarinho.WidthRequest / 2);
-		var posVPassarinho = (LarguraJanela / 2) - (ImagePassarinho.HeightRequest / 2) + ImagePassarinho.TranslationY;
+		var posVPassarinho = (AlturaJanela / 2) + (ImagePassarinho.HeightRequest / 2) + ImagePassarinho.TranslationY;
+		var yMaxCano = CanoCima.HeightRequest + CanoCima.TranslationY + aberturaMinima;
 		if (posHPassarinho >= Math.Abs(CanoBaixo.TranslationX) - CanoBaixo.WidthRequest &&
-		posHPassarinho <= Math.Abs(CanoCima.TranslationX) + CanoBaixo.WidthRequest &&
-		posHPassarinho <= CanoBaixo.HeightRequest + CanoBaixo.TranslationY)
+		posHPassarinho <= Math.Abs(CanoBaixo.TranslationX) + CanoBaixo.WidthRequest &&
+		posVPassarinho >= yMaxCano)
 		{
 			return true;
 		}
