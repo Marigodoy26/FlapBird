@@ -3,11 +3,11 @@
 public partial class MainPage : ContentPage
 {
 	const int gravidade = 2;
-	const int TempoEntreFrames = 25;
+	const int TempoEntreFrames = 20;
 	bool EstaMorto = true;
 	double LarguraJanela = 0;
 	double AlturaJanela = 0;
-	int Velocidade = 20;
+	int Velocidade = 10;
 	const int ForcaPulo = 20;
 	bool EstaPulando = false;
 	int TempoPulando = 1;
@@ -19,8 +19,6 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-
-		//Desenhar().RunSynchronously();
 	}
 	void AplicaGravidade()
 	{
@@ -30,18 +28,19 @@ public partial class MainPage : ContentPage
 	async Task Desenhar()
 	{
 		while (!EstaMorto)
-
 		{
 			if (EstaPulando)
 				AplicaPulo();
 			else
 				AplicaGravidade();
-			await Task.Delay(TempoEntreFrames);
+
 			GerenciaCanos();
+
 			if (VerificaColisao())
 			{
 				EstaMorto = true;
 				FrameGameOver.IsVisible = true;
+				labelScore.Text = "Você passou por\n" + Score + " canos";
 				break;
 			}
 			await Task.Delay(TempoEntreFrames);
@@ -72,24 +71,31 @@ public partial class MainPage : ContentPage
 		base.OnSizeAllocated(width, height);
 		LarguraJanela = width;
 		AlturaJanela = height;
+		if (height > 0)
+		{
+			CanoCima.HeightRequest = height - Chao.HeightRequest;
+			CanoBaixo.HeightRequest = height - Chao.HeightRequest;
+		}
 	}
 
 	void GerenciaCanos()
 	{
 		CanoCima.TranslationX -= Velocidade;
 		CanoBaixo.TranslationX -= Velocidade;
-		if (CanoBaixo.TranslationX <= -LarguraJanela)
+		if (CanoBaixo.TranslationX < -LarguraJanela)
 		{
 			CanoCima.TranslationX = 0;
 			CanoBaixo.TranslationX = 0;
-			var alturaMax = -100;
-			var alturaMin = -CanoBaixo.HeightRequest;
+
+			var alturaMax =  -(CanoBaixo.HeightRequest * 0.1);
+			var alturaMin = -(CanoBaixo.HeightRequest * 0.8);
 			CanoCima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
 			CanoBaixo.TranslationY = CanoCima.TranslationY + aberturaMinima + CanoBaixo.HeightRequest;
+		
 			Score++;
-			if(Score%2==0)
-			Velocidade++;
-			labelScore.Text = "Canos:" + Score.ToString("D3");
+			if (Score % 4 == 0)
+				Velocidade++;
+			labelScore.Text = "Canos:" + Score.ToString("D5");
 		}
 	}
 
@@ -144,9 +150,10 @@ public partial class MainPage : ContentPage
 
 	bool VerificacolisaoCanoCima()
 	{
-		var posHPassarinho = (LarguraJanela / 2) - (ImagePassarinho.WidthRequest / 2);
-		var posVPassarinho = (LarguraJanela / 2) - (ImagePassarinho.HeightRequest / 2) + ImagePassarinho.TranslationY;
-		if (posHPassarinho >= Math.Abs(CanoCima.TranslationX) - CanoCima.WidthRequest &&
+		var posHPassarinho = (LarguraJanela - 50) - (ImagePassarinho.WidthRequest / 2);
+		var posVPassarinho = (AlturaJanela / 2) - (ImagePassarinho.HeightRequest / 2) + ImagePassarinho.TranslationY;
+		if
+		(posHPassarinho >= Math.Abs(CanoCima.TranslationX) - CanoCima.WidthRequest &&
 		posHPassarinho <= Math.Abs(CanoCima.TranslationX) + CanoCima.WidthRequest &&
 		posHPassarinho <= CanoCima.HeightRequest + CanoCima.TranslationY)
 		{
@@ -159,11 +166,12 @@ public partial class MainPage : ContentPage
 	}
 	bool VerificacolisaoCanoBaixo()
 	{
-		var posHPassarinho = (LarguraJanela / 2) - (ImagePassarinho.WidthRequest / 2);
+		var posHPassarinho = LarguraJanela - 50 - ImagePassarinho.WidthRequest / 2;
 		var posVPassarinho = (AlturaJanela / 2) + (ImagePassarinho.HeightRequest / 2) + ImagePassarinho.TranslationY;
 		var yMaxCano = CanoCima.HeightRequest + CanoCima.TranslationY + aberturaMinima;
-		if (posHPassarinho >= Math.Abs(CanoBaixo.TranslationX) - CanoBaixo.WidthRequest &&
-		posHPassarinho <= Math.Abs(CanoBaixo.TranslationX) + CanoBaixo.WidthRequest &&
+		if
+		(posHPassarinho >= Math.Abs(CanoCima.TranslationX) - CanoCima.WidthRequest &&
+		posHPassarinho <= Math.Abs(CanoCima.TranslationX) + CanoCima.WidthRequest &&
 		posVPassarinho >= yMaxCano)
 		{
 			return true;
