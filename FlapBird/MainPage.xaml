@@ -19,26 +19,26 @@
               <Image x:Name="ImagePassarinho"
                      Source="passarinho.png"
                      Aspect="AspectFill"
-                     Margin="20,0,0,0"
+                     Margin="0,0,0,0"
                      HeightRequest="50"
                      WidthRequest="50"
-                     HorizontalOptions="Start"
-                     VerticalOptions="Center"/>
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     BackgroundColor="Blue"/>
 
               <Image x:Name="CanoCima"
                      Source="canocima.png"
-                     HeightRequest="550"
-                     WidthRequest="80"
+                     HeightRequest="450"
+                     WidthRequest="70"
                      Margin="0,0,0,0"
                      Aspect="Fill"
                      VerticalOptions="Start"
-                     HorizontalOptions="End"
-                     BackgroundColor="Red"/>
+                     HorizontalOptions="End"/>
 
               <Image x:Name="CanoBaixo"
                      Source="canobaixo.png"
-                     HeightRequest="550"
-                     WidthRequest="80"
+                     HeightRequest="450"
+                     WidthRequest="70"
                      Margin="0,0,0,0"
                      Aspect="Fill"
                      VerticalOptions="Start"

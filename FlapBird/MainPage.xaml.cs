@@ -7,7 +7,7 @@ public partial class MainPage : ContentPage
 	bool EstaMorto = true;
 	double LarguraJanela = 0;
 	double AlturaJanela = 0;
-	int Velocidade = 10;
+	int Velocidade = 15;
 	const int ForcaPulo = 20;
 	bool EstaPulando = false;
 	int TempoPulando = 1;
@@ -41,6 +41,7 @@ public partial class MainPage : ContentPage
 				EstaMorto = true;
 				FrameGameOver.IsVisible = true;
 				labelScore.Text = "Você passou por\n" + Score + " canos";
+				SoundHelper.Play("morte.wav");
 				break;
 			}
 			await Task.Delay(TempoEntreFrames);
@@ -63,6 +64,7 @@ public partial class MainPage : ContentPage
 		ImagePassarinho.TranslationX = 0;
 		CanoCima.TranslationX = -LarguraJanela;
 		CanoBaixo.TranslationX = -LarguraJanela;
+		SoundHelper.Play("começo.wav");
 		GerenciaCanos();
 	}
 
@@ -87,11 +89,11 @@ public partial class MainPage : ContentPage
 			CanoCima.TranslationX = 0;
 			CanoBaixo.TranslationX = 0;
 
-			var alturaMax =  -(CanoBaixo.HeightRequest * 0.1);
+			var alturaMax = -(CanoBaixo.HeightRequest * 0.1);
 			var alturaMin = -(CanoBaixo.HeightRequest * 0.8);
 			CanoCima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
 			CanoBaixo.TranslationY = CanoCima.TranslationY + aberturaMinima + CanoBaixo.HeightRequest;
-		
+
 			Score++;
 			if (Score % 4 == 0)
 				Velocidade++;
@@ -110,8 +112,8 @@ public partial class MainPage : ContentPage
 
 	bool VerificaColisaoChao()
 	{
-		var maxY = AlturaJanela / 2 - Chao.HeightRequest;
-		if (ImagePassarinho.TranslationY >= maxY)
+		var alturadoTeto = AlturaJanela / 2;
+		if (ImagePassarinho.TranslationY >= alturadoTeto - Chao.Height)
 			return true;
 		else
 			return false;
@@ -130,6 +132,15 @@ public partial class MainPage : ContentPage
 			}
 		}
 		return false;
+	}
+
+	bool VerificaColisaoCano()
+	{
+		if (VerificacolisaoCanoBaixo() || 
+		VerificacolisaoCanoCima())
+			return true;
+		else
+			return false;
 	}
 
 	void AplicaPulo()
@@ -155,7 +166,7 @@ public partial class MainPage : ContentPage
 		if
 		(posHPassarinho >= Math.Abs(CanoCima.TranslationX) - CanoCima.WidthRequest &&
 		posHPassarinho <= Math.Abs(CanoCima.TranslationX) + CanoCima.WidthRequest &&
-		posHPassarinho <= CanoCima.HeightRequest + CanoCima.TranslationY)
+		posVPassarinho <= CanoCima.HeightRequest + CanoCima.TranslationY)
 		{
 			return true;
 		}
@@ -183,4 +194,3 @@ public partial class MainPage : ContentPage
 	}
 
 }
-
